@@ -1,0 +1,5 @@
+
+```bash
+xhost +local:docker
+```
+
