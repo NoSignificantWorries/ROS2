@@ -1,7 +1,0 @@
-{
-	"name": "ROS-jazzy",
-	"build": {
-		"context": "..",
-		"dockerfile": "../Dockerfile"
-	}
-}
