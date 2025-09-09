@@ -1,0 +1,48 @@
+Starting >>> dmitry
+Starting >>> examples_rclcpp_async_client
+Starting >>> examples_rclcpp_cbg_executor
+Starting >>> examples_rclcpp_minimal_action_client
+Finished <<< examples_rclcpp_async_client [0.41s]
+Starting >>> examples_rclcpp_minimal_action_server
+Finished <<< examples_rclcpp_minimal_action_client [0.45s]
+Starting >>> examples_rclcpp_minimal_client
+Finished <<< examples_rclcpp_cbg_executor [0.48s]
+Starting >>> examples_rclcpp_minimal_composition
+Finished <<< examples_rclcpp_minimal_client [0.26s]
+Starting >>> examples_rclcpp_minimal_publisher
+Finished <<< examples_rclcpp_minimal_action_server [0.36s]
+Starting >>> examples_rclcpp_minimal_service
+Finished <<< examples_rclcpp_minimal_composition [0.36s]
+Starting >>> examples_rclcpp_minimal_subscriber
+Finished <<< examples_rclcpp_minimal_service [0.38s]
+Starting >>> examples_rclcpp_minimal_timer
+Finished <<< examples_rclcpp_minimal_publisher [0.50s]
+Starting >>> examples_rclcpp_multithreaded_executor
+Finished <<< examples_rclcpp_minimal_timer [0.25s]
+Starting >>> examples_rclcpp_wait_set
+Finished <<< examples_rclcpp_minimal_subscriber [0.60s]
+Starting >>> examples_rclpy_executors
+Finished <<< examples_rclcpp_multithreaded_executor [0.25s]
+Starting >>> examples_rclpy_guard_conditions
+Finished <<< dmitry [2.14s]
+Finished <<< examples_rclcpp_wait_set [0.73s]
+Starting >>> examples_rclpy_minimal_action_client
+Starting >>> examples_rclpy_minimal_action_server
+Finished <<< examples_rclpy_guard_conditions [1.86s]
+Starting >>> examples_rclpy_minimal_client
+Finished <<< examples_rclpy_executors [1.91s]
+Starting >>> examples_rclpy_minimal_publisher
+Finished <<< examples_rclpy_minimal_action_server [1.78s]
+Starting >>> examples_rclpy_minimal_service
+Finished <<< examples_rclpy_minimal_action_client [2.04s]
+Starting >>> examples_rclpy_minimal_subscriber
+Finished <<< examples_rclpy_minimal_client [1.72s]
+Starting >>> examples_rclpy_pointcloud_publisher
+Finished <<< examples_rclpy_minimal_publisher [1.94s]
+Starting >>> launch_testing_examples
+Finished <<< examples_rclpy_minimal_service [1.65s]
+Finished <<< examples_rclpy_minimal_subscriber [1.62s]
+Finished <<< examples_rclpy_pointcloud_publisher [1.19s]
+Finished <<< launch_testing_examples [1.15s]
+
+Summary: 23 packages finished [6.58s]
