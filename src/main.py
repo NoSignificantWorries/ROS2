@@ -5,6 +5,10 @@ from rclpy.node import Node
 from geometry_msgs.msg import Twist
 import math
 
+#╭──────╮
+#│ main │
+#╰──────╯
+
 class DrawCircleNode(Node):
     def __init__(self):
         super().__init__('draw_circle_node')
