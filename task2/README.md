@@ -99,3 +99,31 @@ colcon build > ~/workbench/ex04/colcon_build.txt
 ## ex05
 
 
+**_Link_**:
+- [ROS2 nodes](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html)
+
+
+```bash
+ros2 node list
+
+# remapping some parameters for process
+ros2 run turtlesim turtlesim_node --ros-args --remap __node:=dmitry_turtle
+
+ros2 node info /turtlesim
+```
+
+
+## ex06
+
+
+**_Link_**:
+- [Topics](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html)
+
+
+
+```bash
+
+rqt
+
+```
+

@@ -9,6 +9,9 @@ case "$ACTION" in
     "keys")
         ros2 run turtlesim turtle_teleop_key
         ;;
+    "graph")
+        ros2 run rqt_graph rqt_graph
+        ;;
     "kill")
         ros2 service call /kill turtlesim/srv/Kill "{name: '$2'}"
         ;;
