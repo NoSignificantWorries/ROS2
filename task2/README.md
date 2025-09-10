@@ -16,7 +16,6 @@ Examples:
 - `ros2 pkg executables action_tutorial_py`
 
 
-
 ## ex3
 Build packages with `colcon`
 
@@ -122,8 +121,73 @@ ros2 node info /turtlesim
 
 
 ```bash
+ros2 run turtlesim turtlesim_node
+ros2 run turtlesim turtle_teleop_key
 
-rqt
+ros2 run rqt_graph rqt_graph
+# reoad graph and use "Nodes/Topics (active)" to see topics and nodes information
 
+ros2 topic list
+# to see type of messages used in each topic
+ros2 topic list -t
+
+ros2 topic echo /turtle1/cmd_vel
+
+ros2 topic info /turtle1/cmd_vel
+# --Output:
+# Type: geometry_msgs/msg/Twist
+# Publisher count: 1
+# Subscription count: 2
+
+# to see format of message format
+ros2 interface show geometry_msgs/msg/Twist
+# --Output:
+# This expresses velocity in free space broken into its linear and angular parts.
+
+# Vector3  linear
+#         float64 x
+#         float64 y
+#         float64 z
+# Vector3  angular
+#         float64 x
+#         float64 y
+#         float64 z
+
+# publishing message to draw circle
+ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"
+
+# see new turtle position
+ros2 topic echo /turtle1/pose
+
+# publishing turtle pose
+ros2 topic pub /pose geometry_msgs/msg/PoseStamped '{header: "auto", pose: {position: {x: 1.0, y: 2.0, z: 3.0}}}'
 ```
 
+#### Drawing number 8:
+
+Turtle in ROS simulations moving with velocity in m/s and 1 command "pub" working for 1 second.
+And we have these formulas for linear and angular movement:
+- $t=\frac{S}{V}$
+- $t=\frac{\varphi}{\omega}$
+
+Where $t$ - time (s), $S$ - distance, $V$ - linear velocity, $\varphi$ - angle in radians and $\omega$ - angular velocity
+
+So we can use constant time $t=1 \text{ sec.}$ and needed angles and distances to draw what we wanted in `geometry_msgs/msg/Tvist` format:
+
+$V=\frac{S}{t} \rightarrow V=S$
+
+$\omega=\frac{\varphi}{t} \rightarrow \omega=\varphi$
+
+And $S$ and $\varphi$ we can find with simple math prenceples:
+
+> --- We need to draw number 8 = 2 circes
+
+Circle 1 ($r=1$): $V=S=2\cdot\pi\cdot r=2\cdot\pi=6.28318530718$ and $\omega=\varphi=360\text{ deg.}=2\cdot\pi=6.28318530718$
+
+Circle 2 ($r=1.7$): $V=S=2\cdot\pi\cdot r=2\cdot\pi\cdot 1.7=10.6814150222$ and $\omega$ is the same, but negative to draw circle down
+
+Finally we have this two command to draw number eight:
+```bash
+ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 6.28318530718, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 6.28318530718}}"
+ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 10.6814150222, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -6.28318530718}}"
+```
