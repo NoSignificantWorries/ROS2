@@ -297,3 +297,29 @@ ros2 run rqt_console rqt_console
 # publishing topic to move turtle1 in turtlesim1
 ros2 topic pub -r 1 /turtlesim1/turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
 ```
+
+
+## ex09
+
+
+#### **_Link:_**
+- [Interfaces](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html)
+
+
+#### **_Creating custom service:_**
+```bash
+mkdir -p ros2-ws/src
+cd ros2-ws/src
+ros2 pkg create --build-type ament_cmake --license Apache-2.0 full_name_sum_pkg
+
+cd full_name_sum_pkg
+mkdir msg srv
+
+touch srv/FullNameSumService.srv
+
+colcon build --packages-select FullNameSum
+source install/setup.bash
+
+# Installation: RUN apt-get install -y vim python3-colcon-ed
+colcon edit full_name_sum_pkg FullNameSumService.srv
+```
