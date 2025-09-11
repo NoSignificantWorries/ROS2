@@ -323,3 +323,27 @@ source install/setup.bash
 # Installation: RUN apt-get install -y vim python3-colcon-ed
 colcon edit full_name_sum_pkg FullNameSumService.srv
 ```
+
+## ex10
+
+
+#### **_Link:_**
+- [Publisher and Subscriber](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html)
+
+
+#### **_Publisher and Subscriber:_**
+```bash
+mkdir -p ros2-ws/src
+cd ros2-ws/src
+
+# installing dependensies
+rosdep install -i --from-path src --rosdistro jazzy -y
+colcon build --packages-select text_to_cmd_vel
+source install/setup.bash
+
+# starting tertlesim
+# running node
+ros2 run text_to_cmd_vel text_to_cmd_vel
+# publishing any command
+ros2 topic pub /cmd_text std_msgs/msg/String "{data: 'move_forward'}"
+```
