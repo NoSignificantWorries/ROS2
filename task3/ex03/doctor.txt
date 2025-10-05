@@ -1,0 +1,77 @@
+   PLATFORM INFORMATION
+system           : Linux
+platform info    : Linux-6.16.8-arch3-1-x86_64-with-glibc2.39
+release          : 6.16.8-arch3-1
+processor        : x86_64
+
+   QOS COMPATIBILITY LIST
+topic [type]            : /parameter_events [rcl_interfaces/msg/ParameterEvent]
+publisher node          : turtlesim
+subscriber node         : turtlesim
+compatibility status    : OK
+topic [type]            : /parameter_events [rcl_interfaces/msg/ParameterEvent]
+publisher node          : turtlesim
+subscriber node         : turtlesim
+compatibility status    : OK
+topic [type]            : /parameter_events [rcl_interfaces/msg/ParameterEvent]
+publisher node          : turtlesim
+subscriber node         : teleop_turtle
+compatibility status    : OK
+topic [type]            : /parameter_events [rcl_interfaces/msg/ParameterEvent]
+publisher node          : _ros2cli_daemon_0_8d547d04940d46ef890994694ad0d66a
+subscriber node         : turtlesim
+compatibility status    : OK
+topic [type]            : /parameter_events [rcl_interfaces/msg/ParameterEvent]
+publisher node          : _ros2cli_daemon_0_8d547d04940d46ef890994694ad0d66a
+subscriber node         : turtlesim
+compatibility status    : OK
+topic [type]            : /parameter_events [rcl_interfaces/msg/ParameterEvent]
+publisher node          : _ros2cli_daemon_0_8d547d04940d46ef890994694ad0d66a
+subscriber node         : teleop_turtle
+compatibility status    : OK
+topic [type]            : /parameter_events [rcl_interfaces/msg/ParameterEvent]
+publisher node          : teleop_turtle
+subscriber node         : turtlesim
+compatibility status    : OK
+topic [type]            : /parameter_events [rcl_interfaces/msg/ParameterEvent]
+publisher node          : teleop_turtle
+subscriber node         : turtlesim
+compatibility status    : OK
+topic [type]            : /parameter_events [rcl_interfaces/msg/ParameterEvent]
+publisher node          : teleop_turtle
+subscriber node         : teleop_turtle
+compatibility status    : OK
+topic [type]            : /turtle1/cmd_vel [geometry_msgs/msg/Twist]
+publisher node          : teleop_turtle
+subscriber node         : turtlesim
+compatibility status    : OK
+topic [type]            : /turtle1/rotate_absolute/_action/feedback [turtlesim/action/RotateAbsolute_FeedbackMessage]
+publisher node          : turtlesim
+subscriber node         : teleop_turtle
+compatibility status    : OK
+--
+   RMW MIDDLEWARE
+middleware name    : rmw_fastrtps_cpp
+
+   ROS 2 INFORMATION
+distribution name      : jazzy
+distribution type      : ros2
+distribution status    : active
+release platforms      : {'debian': ['bookworm'], 'rhel': ['9'], 'ubuntu': ['noble']}
+
+   TOPIC LIST
+topic               : /turtle1/cmd_vel
+publisher count     : 1
+subscriber count    : 1
+topic               : /turtle1/color_sensor
+publisher count     : 1
+subscriber count    : 0
+topic               : /turtle1/pose
+publisher count     : 1
+subscriber count    : 0
+topic               : /turtle1/rotate_absolute/_action/feedback
+publisher count     : 1
+subscriber count    : 1
+topic               : /turtle1/rotate_absolute/_action/status
+publisher count     : 1
+subscriber count    : 1

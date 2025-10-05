@@ -1,0 +1,13 @@
+{
+  "package_name": "turtlesim",
+  "non_idl_tuples": [
+    "/home/ubuntu/workbench/ex02/ros2_turtle_ws/turtlesim:action/RotateAbsolute.action",
+    "/home/ubuntu/workbench/ex02/ros2_turtle_ws/turtlesim:msg/Color.msg",
+    "/home/ubuntu/workbench/ex02/ros2_turtle_ws/turtlesim:msg/Pose.msg",
+    "/home/ubuntu/workbench/ex02/ros2_turtle_ws/turtlesim:srv/Kill.srv",
+    "/home/ubuntu/workbench/ex02/ros2_turtle_ws/turtlesim:srv/SetPen.srv",
+    "/home/ubuntu/workbench/ex02/ros2_turtle_ws/turtlesim:srv/Spawn.srv",
+    "/home/ubuntu/workbench/ex02/ros2_turtle_ws/turtlesim:srv/TeleportAbsolute.srv",
+    "/home/ubuntu/workbench/ex02/ros2_turtle_ws/turtlesim:srv/TeleportRelative.srv"
+  ]
+}
