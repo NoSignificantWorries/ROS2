@@ -1,0 +1,16 @@
+# goal
+string task_type
+float64 area_size
+float64 target_x
+float64 target_y
+---
+# result
+bool success
+int32 cleaned_points
+float64 total_distance
+---
+# feedback
+int32 progress_percent
+int32 current_cleaned_points
+float64 current_x
+float64 current_y

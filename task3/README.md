@@ -34,3 +34,29 @@ ros2 doctor
 
 ros2 doctor --report | grep -A 50 "PLATFORM INFORMATION\|RMW MIDDLEWARE\|ROS 2 INFORMATION\|TOPIC LIST" > doctor.txt
 ```
+
+
+```bash
+mkdir -p ros2_ws/src
+cd ros2_ws/src
+ros2 pkg create --build-type ament_python move_to_goal --dependencies rclpy geometry_msgs turtlesim
+
+cd ..
+colcon build --packages-select move_to_goal
+source install/setup.bash
+
+ros2 run turtlesim turtlesim_node
+
+ros2 run move_to_goal move_to_goal --ros-args -p x:=0.0 -p y:=0.0 -p theta:=0.0
+```
+
+
+```bash
+ros2 pkg create --build-type ament_python action_cleaning_robot
+colcon build --packages-select action_cleaning_robot
+source install/setup.bash
+ros2 interface show action_cleaning_robot/action/CleaningTask
+
+ros2 run action_cleaning_robot cleaning_action_server
+ros2 run action_cleaning_robot cleaning_action_client
+```
