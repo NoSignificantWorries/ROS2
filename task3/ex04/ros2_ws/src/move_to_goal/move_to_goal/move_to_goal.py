@@ -9,7 +9,7 @@ import sys
 
 class Geometry:
     def normalize_angle(angle) -> float:
-        return math.atan2(math.sin(angle), math.cos(angle))
+        return math.remainder(angle, math.pi * 2)
     
     def distance(p1, p2) -> float:
         return math.sqrt(
@@ -52,9 +52,6 @@ class TurtleController:
         self.goal_position = goal_position
         if not self._test_position(self.goal_position):
             raise ValueError("ERROR: Wrong goal position")
-        
-        self.start_position = None
-        self.transition_teta = None
 
     def _test_position(self, position) -> bool:
         return (self.wlim[0] <= position["x"] <= self.wlim[1]) and \
@@ -69,38 +66,54 @@ class TurtleController:
         self.goal_position = position
         return True
     
-    def angular_error(self) -> float:
-        if self.current_position is None:
+    def angular_error(self, p1=None, p2=None) -> float:
+        if p1 is None:
+            p1 = self.current_position
+        if p2 is None:
+            p2 = self.goal_position
+        if p1 is None or p2 is None:
             return 0.0
-        angle_to_goal = Geometry.angle(self.current_position, self.goal_position)
-        return Geometry.normalize_angle(angle_to_goal - self.current_position["theta"])
-    
-    def calc_distance(self) -> float:
-        if self.current_position is None:
-            return float("inf")
-        return Geometry.distance(self.current_position, self.goal_position)
-    
-    def start(self) -> None:
-        self.start_position = self.current_position
-    
-    def stop(self) -> None:
-        self.start_position = None
-    
-    def movement_step(self, delay=0.1):
-        if self.start_position is None:
-            self.start()
 
+        angle_to_goal = Geometry.angle(p1, p2)
+        return Geometry.normalize_angle(angle_to_goal - p1["theta"])
+    
+    def calc_distance(self, p1=None, p2=None) -> float:
+        if p1 is None:
+            p1 = self.current_position
+        if p2 is None:
+            p2 = self.goal_position
+        if p1 is None or p2 is None:
+            return float("inf")
+
+        return Geometry.distance(p1, p2)
+    
+    def rotation_step(self, current_angle=None, target_angle=None, delay=0.1):
+        if current_angle is None:
+            current_angle = self.current_position["theta"]
+        if target_angle is None:
+            target_angle = self.goal_position["theta"]
+        angular = 0.0
+        
+        ang_err = Geometry.normalize_angle(target_angle - current_angle)
+        
+        if abs(ang_err) >= self.ang_tolerance:
+            angular = ang_err * self.angle_k
+
+        angular = max(min(angular, self.angle_lim[1]), self.angle_lim[0])
+        
+        return 0.0, angular
+    
+    def linear_step(self, delay=0.1):
         linear = 0.0
         angular = 0.0
 
         dist_err = self.calc_distance()
         ang_err = self.angular_error()
         
-        if dist_err >= self.dist_tolerance:
+        if abs(dist_err) >= self.dist_tolerance:
             linear = dist_err * self.linear_k
         
-        if ang_err >= self.ang_tolerance:
-            angular = ang_err * self.angle_k
+        angular = ang_err * self.angle_k
 
         linear = max(min(linear, self.linear_lim[1]), self.linear_lim[0])
         angular = max(min(angular, self.angle_lim[1]), self.angle_lim[0])
@@ -150,7 +163,6 @@ class MoveToGoal(Node):
             rclpy.spin_once(self)
         
         self.get_logger().info(f"name: {self.turtle_name} | goal: x={goal_x:.4f} y={goal_y:.4f} theta={goal_theta:.4f}")
-        self.position_reached = False
         self.move_to_goal()
     
     def update_pose(self, data) -> None:
@@ -161,6 +173,8 @@ class MoveToGoal(Node):
         })
     
     def move_to_goal(self) -> None:
+        self.transit_angle = Geometry.angle(self.controller.current_position, self.controller.goal_position)
+        self.step = 0
         self.timer = self.create_timer(0.1, self.control_loop)
 
     def control_loop(self) -> None:
@@ -169,12 +183,26 @@ class MoveToGoal(Node):
         
         vel_msg = Twist()
         
-        linear, angular = self.controller.movement_step()
-        
-        if linear == 0 and angular == 0:
-            self.get_logger().info(f"Finished")
-            self.destroy_timer(self.timer)
-            return
+        match self.step:
+            case 0:
+                linear, angular = self.controller.rotation_step(target_angle=self.transit_angle)
+                if angular == 0:
+                    self.step = 1
+            case 1:
+                linear, angular = self.controller.linear_step()
+                if linear == 0:
+                    self.step = 2
+            case 2:
+                linear, angular = self.controller.rotation_step()
+                if angular == 0:
+                    self.step = 3
+            case 3:
+                x_err = self.controller.goal_position["x"] - self.controller.current_position["x"]
+                y_err = self.controller.goal_position["y"] - self.controller.current_position["y"]
+                theta_err = self.controller.goal_position["theta"] - self.controller.current_position["theta"]
+                self.get_logger().info(f"Finished. Error: x={x_err} y={y_err} theta={theta_err}")
+                self.destroy_timer(self.timer)
+                return
         
         vel_msg.linear.x = linear
         vel_msg.angular.z = angular
