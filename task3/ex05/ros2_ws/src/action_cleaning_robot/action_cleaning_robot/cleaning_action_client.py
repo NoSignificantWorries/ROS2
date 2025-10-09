@@ -17,10 +17,10 @@ class CleaningActionClient(Node):
             "CleaningTask"
         )
         
-        self.declare_parameter("x", 5.5)
-        self.declare_parameter("y", 5.5)
+        self.declare_parameter("x", 7.5)
+        self.declare_parameter("y", 7.5)
         self.declare_parameter("type", "square")
-        self.declare_parameter("area", 1.0)
+        self.declare_parameter("area", 16.0)
         
         target_x = self.get_parameter("x").get_parameter_value().double_value
         target_y = self.get_parameter("y").get_parameter_value().double_value
