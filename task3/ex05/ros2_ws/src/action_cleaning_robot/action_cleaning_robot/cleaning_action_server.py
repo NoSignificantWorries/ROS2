@@ -245,11 +245,58 @@ class CleaningActionServer(Node):
             self.get_logger().error("ERROR: Unknown command")
             return self.result
         
-        self.movement_timer()
+        # self.movement_timer()
         
-        while self.timer is not None:
-            continue
+        # ================================================================
+        self.ticks = 0
+        self.delay = 0.1
+        while rclpy.ok() and (self.movement_step < len(self.movement_pipeline)):
+            rclpy.spin_once(self, timeout_sec=0.1)
+            self.ticks += 1
+            if self.current_position is None:
+                continue
+
+            vel_msg = Twist()
             
+            linear, angular = self.movement_pipeline[self.movement_step](self)
+            
+            if linear is None or angular is None:
+                self.movement_step += 1
+                if self.movement_step >= len(self.movement_pipeline):
+                    self.current_cleaned_points += self.area_size
+                continue
+            
+            d = linear * self.delay
+            deltaS = math.pi * self.r ** 2 - 2 * self.r ** 2 * math.acos(d / (2 * self.r)) + d / (2 * math.sqrt(4 * self.r ** 2 - d ** 2))
+            self.current_cleaned_points += deltaS
+            self.current_distance += d
+
+            if self.ticks % 20 == 0:
+                progress = int((self.movement_step + 1) / len(self.movement_pipeline) * 100)
+                feedback_msg = CleaningTask.Feedback()
+                feedback_msg.progress_percent = progress
+                feedback_msg.current_cleaned_points = int(self.current_cleaned_points)
+                feedback_msg.current_x = self.current_position["x"]
+                feedback_msg.current_y = self.current_position["y"]
+                
+                self.get_logger().info(f"Sending progress: progress={progress}% | \
+                                         cleaned={self.current_cleaned_points} | \
+                                         position: x={self.current_position["x"]:.6f} y={self.current_position["y"]:.6f}")
+
+                self.goal_handle.publish_feedback(feedback_msg)
+
+            vel_msg.linear.x = linear
+            vel_msg.angular.z = angular
+            self.velocity_publisher.publish(vel_msg)
+            
+            time.sleep(self.delay)
+
+            vel_msg.linear.x = 0.0
+            vel_msg.angular.z = 0.0
+            self.velocity_publisher.publish(vel_msg)
+        # ================================================================
+
+
         self.result.success = True
         self.result.cleaned_points = int(self.current_cleaned_points)
         self.result.total_distance = self.current_distance

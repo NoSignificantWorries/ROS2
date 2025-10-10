@@ -174,7 +174,7 @@ class MoveToGoal(Node):
     
     def move_to_goal(self) -> None:
         self.transit_angle = Geometry.angle(self.controller.current_position, self.controller.goal_position)
-        self.step = 0
+        self.step = 1
         self.timer = self.create_timer(0.1, self.control_loop)
 
     def control_loop(self) -> None:
@@ -184,10 +184,10 @@ class MoveToGoal(Node):
         vel_msg = Twist()
         
         match self.step:
-            case 0:
-                linear, angular = self.controller.rotation_step(target_angle=self.transit_angle)
-                if angular == 0:
-                    self.step = 1
+            # case 0:
+            #    linear, angular = self.controller.rotation_step(target_angle=self.transit_angle)
+            #    if angular == 0:
+            #        self.step = 1
             case 1:
                 linear, angular = self.controller.linear_step()
                 if linear == 0:
