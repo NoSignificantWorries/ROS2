@@ -3,7 +3,7 @@ FROM osrf/ros:jazzy-desktop-full
 ARG USERNAME=ubuntu
 
 RUN apt-get update -y && apt-get upgrade -y
-RUN apt-get install -y vim python3-colcon-ed tree
+RUN apt-get install -y vim python3-colcon-ed tree tmux neovim
 
 SHELL ["/usr/bin/bash", "-c"]
 
