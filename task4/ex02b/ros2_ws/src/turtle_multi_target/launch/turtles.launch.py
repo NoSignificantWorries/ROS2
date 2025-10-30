@@ -13,7 +13,7 @@ def generate_launch_description():
             name='sim'
         ),
         Node(
-            package='turtle_multi_target',
+            package='two_turtles_one_carrot',
             executable='broadcaster',
             name='broadcaster_1',
             parameters=[
@@ -25,7 +25,7 @@ def generate_launch_description():
             description='Target frame name'
         ),
         Node(
-            package='turtle_multi_target',
+            package='two_turtles_one_carrot',
             executable='broadcaster',
             name='broadcaster_2',
             parameters=[
@@ -33,7 +33,7 @@ def generate_launch_description():
             ]
         ),
         Node(
-            package='turtle_multi_target',
+            package='two_turtles_one_carrot',
             executable='listener',
             name='listener',
             parameters=[
@@ -50,7 +50,7 @@ def generate_launch_description():
             ]
         ),
         Node(
-            package='turtle_multi_target',
+            package='two_turtles_one_carrot',
             executable='broadcaster',
             name='broadcaster_3',
             parameters=[

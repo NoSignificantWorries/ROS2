@@ -20,7 +20,7 @@ def generate_launch_description():
         
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([os.path.join(
-            					get_package_share_directory('turtle_multi_target'), 
+            					get_package_share_directory('two_turtles_one_carrot'), 
             					'launch'),
                                        		'/turtles.launch.py']),
         	launch_arguments={'target_frame': LaunchConfiguration('target_frame')}.items(),
@@ -39,7 +39,7 @@ def generate_launch_description():
             description='Distance threshold for switching targets.'
         ),
         Node(
-            package='turtle_multi_target',
+            package='two_turtles_one_carrot',
             executable='carrot',
             name='dynamic_broadcaster',
             parameters=[
