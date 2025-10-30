@@ -35,7 +35,7 @@ remove_container_if_exists() {
 build_if_missing() {
     if ! check_image_exists; then
         echo "Image '$IMAGE' not found, building..."
-        docker build -t "$IMAGE" .
+        docker build --no-cache -t "$IMAGE" .
     fi
 }
 
@@ -81,7 +81,7 @@ main_func() {
             run_docker "-d $(setup_common_opts)" "/bin/bash -c \"sleep infinity\""
             ;;
         "build")
-            docker build -t "$IMAGE" -f "$DOCKERFILE" .
+            docker build --no-cache -t "$IMAGE" -f "$DOCKERFILE" .
             ;;
         "stop")
             stop_container_if_running

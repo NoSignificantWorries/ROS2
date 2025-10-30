@@ -4,6 +4,7 @@ ARG USERNAME=ubuntu
 
 RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y vim python3-colcon-ed tree tmux neovim
+RUN apt-get install -y ros-jazzy-rviz2 ros-jazzy-turtle-tf2-py ros-jazzy-tf2-ros ros-jazzy-tf2-tools ros-jazzy-turtlesim
 
 SHELL ["/usr/bin/bash", "-c"]
 
