@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="sam_bot">
+
+  <!-- Объявление параметров -->
+  <xacro:property name="base_size" value="0.42 0.31 0.18"/>
+  <xacro:property name="base_mass" value="15"/>
+  <xacro:property name="wheel_radius" value="0.1"/>
+  <xacro:property name="wheel_length" value="0.04"/>
+  <xacro:property name="wheel_mass" value="0.5"/>
+  <xacro:property name="caster_radius" value="0.06"/>
+  <xacro:property name="caster_mass" value="0.5"/>
+
+  <xacro:macro name="wheel" params="name parent xyz rpy">
+    <link name="${name}_link">
+      <visual>
+        <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+        <material name="Gray">
+          <color rgba="0.5 0.5 0.5 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+        <mass value="${wheel_mass}"/>
+        <inertia ixx="0.0013" ixy="0" ixz="0" iyy="0.0013" iyz="0" izz="0.0025"/>
+      </inertial>
+    </link>
+    <joint name="${name}_joint" type="continuous">
+      <parent link="${parent}"/>
+      <child link="${name}_link"/>
+      <origin rpy="${rpy}" xyz="${xyz}"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${base_size}"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1.0 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${base_size}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="1.5708 0 1.5708" xyz="0 0 0"/>
+      <mass value="${base_mass}"/>
+      <inertia ixx="0.261" ixy="0.0" ixz="0.0" iyy="0.341" iyz="0.0" izz="0.161"/>
+    </inertial>
+  </link>
+
+  <link name="base_footprint"/>
+  <joint name="base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_footprint"/>
+    <origin rpy="0 0 0" xyz="0 0 -0.15"/>
+  </joint>
+
+  <xacro:wheel name="drivewhl_l" parent="base_link" xyz="-0.12 0.18 -0.05" rpy="0 0 0"/>
+  <xacro:wheel name="drivewhl_r" parent="base_link" xyz="-0.12 -0.18 -0.05" rpy="0 0 0"/>
+
+  <link name="front_caster">
+    <visual>
+      <geometry>
+        <sphere radius="${caster_radius}"/>
+      </geometry>
+      <material name="Cyan">
+        <color rgba="0 1.0 1.0 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="${caster_radius}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${caster_mass}"/>
+      <inertia ixx="0.00072" ixy="0" ixz="0" iyy="0.00072" iyz="0" izz="0.00072"/>
+    </inertial>
+  </link>
+  <joint name="caster_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_caster"/>
+    <origin rpy="0 0 0" xyz="0.14 0 -0.09"/>
+  </joint>
+</robot>

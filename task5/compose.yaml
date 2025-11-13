@@ -1,0 +1,21 @@
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "ros-jazzy-t5"
+    network_mode: "host"
+    environment:
+      - DISPLAY
+      - XDG_RUNTIME_DIR
+      - WAYLAND_DISPLAY
+      - XCURSOR_SIZE=24
+      - QT_ENABLE_HIGHDPI_SCALING=1
+      - QT_SCALE_FACTOR_ROUNDING_POLICY=Round
+      - GDK_DPI_SCALE=1.5
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY
+      - .:/home/ubuntu/workbench
+      - ../tmux.conf:/home/ubuntu/.tmux.conf
+
