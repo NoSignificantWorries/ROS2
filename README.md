@@ -1,6 +1,16 @@
-#### Providing Xorg for docker containers
+### On wayland
+
+Install and start `labwc`:
 ```bash
-xhost +local:docker
+DISPLAY=:1 labwc
 ```
 
+Go to the task dir and run following:
+```bash
+cd task1
+docker-compose build
+docker-compose run --rm workspace tmux
+# or
+docker-compose run --rm workspace bash
+```
 
