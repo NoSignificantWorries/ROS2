@@ -107,65 +107,6 @@
     <material>Gazebo/Orange</material>
   </gazebo>
 
-  <joint name="laser_joint" type="fixed">
-    <parent link="chassis" />
-    <child link="laser_frame" />
-    <origin xyz="${chassis_length} 0 ${chassis_height/2}" rpy="0 0 0" />
-  </joint>
-
-  <link name="laser_frame">
-    <visual>
-      <geometry>
-        <cylinder radius="${laser_radius}" length="${laser_length}" />
-      </geometry>
-      <material name="black" />
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder radius="${laser_radius}" length="${laser_length}" />
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="0.1" />
-      <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3" />
-    </inertial>
-  </link>
-
-  <gazebo reference="laser_frame">
-    <sensor name='gpu_lidar' type='gpu_lidar'>
-      <pose relative_to='laser_frame'>0 0 0 0 0 0</pose>
-      <topic>
-        scan</topic>
-      <update_rate>
-        5</update_rate>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>50</samples>
-            <resolution>1</resolution>
-            <min_angle>-1.396263</min_angle>
-            <max_angle>1.396263</max_angle>
-          </horizontal>
-          <vertical>
-            <samples>20</samples>
-            <resolution>1</resolution>
-            <min_angle>-0.65</min_angle>
-            <max_angle>0.65</max_angle>
-          </vertical>
-        </scan>
-        <range>
-          <min>0.08</min>
-          <max>10.0</max>
-          <resolution>0.01</resolution>
-        </range>
-      </ray>
-      <always_on>1</always_on>
-      <visualize>
-        true</visualize>
-    </sensor>
-  </gazebo>
-
-
   <joint name="left_wheel_joint" type="continuous">
     <parent link="base_link" />
     <child link="left_wheel" />
@@ -348,6 +289,66 @@
 
   <gazebo reference="antenna_2">
     <material>Gazebo/Black</material>
+  </gazebo>
+
+  <link name="laser_frame">
+    <visual>
+      <geometry>
+        <cylinder radius="${laser_radius}" length="${laser_length}" />
+      </geometry>
+      <material name="black" />
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${laser_radius}" length="${laser_length}" />
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1" />
+      <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3" />
+    </inertial>
+  </link>
+
+  <joint name="laser_joint" type="fixed">
+    <parent link="chassis" />
+    <child link="laser_frame" />
+    <origin xyz="${chassis_length} 0 ${chassis_height/2}" rpy="0 0 0" />
+  </joint>
+
+  <gazebo reference="laser_frame">
+    <sensor name='laser_frame' type='gpu_lidar'>
+      <topic>
+        scan</topic>
+      <!-- <gz_frame_id>laser_frame</gz_frame_id> -->
+      <pose relative_to='laser_frame'>0 0 0 0 0 0</pose>
+      <update_rate>
+        5</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>50</samples>
+            <resolution>1</resolution>
+            <min_angle>-1.396263</min_angle>
+            <max_angle>1.396263</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>20</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.65</min_angle>
+            <max_angle>0.65</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.08</min>
+          <max>10.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <always_on>1</always_on>
+      <visualize>
+        true</visualize>
+      <!-- <frame name="laser_frame">laser_frame</frame> -->
+    </sensor>
   </gazebo>
 
 </robot>

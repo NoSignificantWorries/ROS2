@@ -75,16 +75,15 @@ def generate_launch_description():
         parameters=[{
             'config_file': os.path.join(pkg_project_bringup, 'config', 'robot_bridge.yaml'),
             'qos_overrides./tf_static.publisher.durability': 'transient_local',
-            'qos_overrides./robot/scan.subscriber.reliability': 'reliable',
-            'qos_overrides./robot/scan.publisher.reliability': 'reliable',
         }],
         output='screen'
     )
 
-    static_publisher = Node(
+    static_tf_lidar = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
-        arguments=['0', '0', '0', '0', '0', '0', 'robot/base_link', 'robot/laser_frame']
+        arguments=['0', '0', '0', '0', '0', '0', 'robot/laser_frame', 'robot/base_link/laser_frame'],
+        output='screen'
     )
 
     return LaunchDescription([
@@ -93,7 +92,7 @@ def generate_launch_description():
                               description='Open RViz.'),
         bridge,
         robot_state_publisher,
-        # static_publisher,
+        static_tf_lidar,
         rviz,
         TimerAction(
             period=5.0,
