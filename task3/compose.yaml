@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: ../Dockerfile
-    container_name: "ros-jazzy-t5"
+    container_name: "ros-jazzy-t3"
     network_mode: "host"
     environment:
       - DISPLAY=:1
