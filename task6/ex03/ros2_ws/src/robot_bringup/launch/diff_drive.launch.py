@@ -64,7 +64,7 @@ def generate_launch_description():
     rviz = Node(
        package='rviz2',
        executable='rviz2',
-       arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'depth_scene.rviz')],
+       arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'imu_scene.rviz')],
        condition=IfCondition(LaunchConfiguration('rviz'))
     )
 
@@ -90,6 +90,13 @@ def generate_launch_description():
         package='tf2_ros',
         executable='static_transform_publisher',
         arguments=['0', '0', '0', '0', '0', '0', 'robot/camera_link', 'robot/base_link/depth_camera'],
+        output='screen'
+    )
+
+    static_tf_camera = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        arguments=['0', '0', '0', '0', '0', '0', 'robot/imu_link', 'robot/base_link/imu_sensor'],
         output='screen'
     )
 
