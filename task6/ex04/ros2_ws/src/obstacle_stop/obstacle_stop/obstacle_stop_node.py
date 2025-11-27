@@ -10,17 +10,16 @@ class ObstacleStopNode(Node):
         self.cmd_pub = self.create_publisher(Twist, '/robot/cmd_vel', 10)
         self.scan_sub = self.create_subscription(LaserScan, '/robot/scan', self.scan_callback, 10)
 
-        self.safe_distance = 0.8  # порог расстояния для остановки (метры)
-        self.max_speed = 0.2      # скорость движения вперед (м/с)
+        self.safe_distance = 0.8
+        self.max_speed = 0.2
 
         self.get_logger().info('Obstacle stop node started')
 
     def scan_callback(self, scan: LaserScan):
-        # Центральная зона лидара
         front_ranges = scan.ranges[len(scan.ranges)//3: 2*len(scan.ranges)//3]  
         front_dist = min(front_ranges) if front_ranges else float('inf')
 
-        tolerance = 0.05  # дельта для зоны "устойчивости"
+        tolerance = 0.05
 
         twist = Twist()
         if front_dist > (self.safe_distance + tolerance):

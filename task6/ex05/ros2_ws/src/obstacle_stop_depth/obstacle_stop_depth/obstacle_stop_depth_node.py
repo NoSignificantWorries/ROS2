@@ -14,8 +14,8 @@ class DepthListen(Node):
         self.scan = None
         self.timer = self.create_timer(0.1, self.move)
 
-        self.safe_distance = 0.8        # порог расстояния для остановки (метры)
-        self.max_speed = 0.2            # скорость движения вперед (м/с)
+        self.safe_distance = 0.8
+        self.max_speed = 0.2
 
     def pointcloud_callback(self, msg):
         self.scan = msg
@@ -29,7 +29,6 @@ class DepthListen(Node):
             self.get_logger().info('No data received yet, moving forward')
             return
 
-        # Читаем центр облака точек
         index = (self.scan.width * self.scan.height) // 2 + (self.scan.width // 2)
         points = list(pc2.read_points(self.scan, field_names=("x", "y", "z"), skip_nans=True))
 
@@ -40,22 +39,19 @@ class DepthListen(Node):
             return
 
         center_point = points[index]
-        dist = center_point[0]  # расстояние по оси X
+        dist = center_point[0]
 
-        tolerance = 0.05  # дельта для зоны "устойчивости"
+        tolerance = 0.05
 
         if dist > (self.safe_distance + tolerance):
-            # Двигаемся вперед
             twist.linear.x = self.max_speed
             self.get_logger().info(f'Path clear (distance {dist:.2f} m), moving forward')
         elif dist > 0 and dist < (self.safe_distance - tolerance):
-            # Припятствие близко - отъехать
             twist.linear.x = -0.05
             self.get_logger().info(f'Obstacle close ({dist:.2f} m), moving backward')
         else:
-            # Остановка
             twist.linear.x = 0.0
-            self.get_logger().info(f'Distance invalid, stopping')
+            self.get_logger().info('Distance invalid, stopping')
 
         self.publisher.publish(twist)
 

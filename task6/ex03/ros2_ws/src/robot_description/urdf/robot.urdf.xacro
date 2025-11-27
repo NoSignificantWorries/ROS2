@@ -325,7 +325,6 @@
     <sensor name='laser_frame' type='gpu_lidar'>
       <topic>
         scan</topic>
-      <!-- <gz_frame_id>laser_frame</gz_frame_id> -->
       <pose relative_to='laser_frame'>0 0 0 0 0 0</pose>
       <update_rate>
         5</update_rate>
@@ -353,7 +352,6 @@
       <always_on>1</always_on>
       <visualize>
         true</visualize>
-      <!-- <frame name="laser_frame">laser_frame</frame> -->
     </sensor>
   </gazebo>
 

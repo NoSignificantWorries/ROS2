@@ -4,7 +4,7 @@
   <name>obstacle_stop</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="b_val4@mail.ru">bval4</maintainer>
+  <maintainer email="dmitry.a.karpachev@gmail.com">Dmitry Karpachev</maintainer>
   <license>TODO: License declaration</license>
 
   <depend>rclpy</depend>

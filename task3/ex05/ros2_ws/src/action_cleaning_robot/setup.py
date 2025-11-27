@@ -16,8 +16,8 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='Dmitry',
-    maintainer_email='dmitry.karpachev@hotmail.com',
+    maintainer="Dmitry Karpachev",
+    maintainer_email="dmitry.a.karpachev@gmail.com",
     description='TODO: Package description',
     license='MIT',
     extras_require={
