@@ -359,6 +359,7 @@
 
   <link name="camera_link">
     <visual>
+      <origin xyz="0 0 0" rpy="0 1.5708 0" />
       <geometry>
         <cylinder radius="${depth_cam_radius}" length="${depth_cam_length}" />
       </geometry>
@@ -380,12 +381,11 @@
     <child link="camera_link" />
     <origin
       xyz="${chassis_length + depth_cam_length/2} 0 ${chassis_height/2 + depth_cam_radius*2.1}"
-      rpy="0 1.57079632679 0" />
+      rpy="0 0 0" />
   </joint>
 
   <gazebo reference="camera_link">
     <sensor name="depth_camera" type="depth">
-      <!-- <gz_frame_id>robot_depth_camera_stop/camera_link</gz_frame_id> -->
       <update_rate>6</update_rate>
       <always_on>1</always_on>
       <camera>
